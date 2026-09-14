@@ -4,6 +4,7 @@ const $$ = (s) => document.querySelectorAll(s);
 
 let settings = { mode: "mixed", topic: "all", count: 10 };
 let currentSubject = null;
+let cardPpt = "all", cardTopic = "all", cardDeck = [], cardIdx = 0, cardFlipped = false;
 let quiz = []; // shuffled questions for this session
 let answers = {}; // id -> string | string[]
 let current = 0;
@@ -69,6 +70,7 @@ function selectSubject(id) {
   $$("#countSeg button").forEach(x => x.classList.toggle("on", x.dataset.count === "10"));
   renderTopicSeg();
   initStats();
+  setupCards();
   $("#landingView").classList.add("hidden");
   $("#quizLayout").classList.remove("hidden");
   $("#resultView").classList.add("hidden");
@@ -84,6 +86,80 @@ function showLanding() {
   $("#landingView").classList.remove("hidden");
   renderSubjects();
   window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// ---------- Flashcards ----------
+function pptList() {
+  const set = [];
+  (currentSubject.review || []).forEach(c => { if (set.indexOf(c.ppt) < 0) set.push(c.ppt); });
+  return set;
+}
+
+function renderPptSeg() {
+  const seg = $("#pptSeg"); seg.innerHTML = "";
+  const mk = (val, label, on) => {
+    const b = document.createElement("button");
+    b.dataset.ppt = val; b.textContent = label;
+    if (on) b.classList.add("on");
+    seg.appendChild(b);
+  };
+  mk("all", "Lahat ng PPT", cardPpt === "all");
+  pptList().forEach(p => mk(p, p, cardPpt === p));
+}
+
+function renderCardTopicSeg() {
+  const seg = $("#cardTopicSeg"); seg.innerHTML = "";
+  const topics = currentSubject.reviewTopics || {};
+  const inPpt = (t) => cardPpt === "all" || (currentSubject.review || []).some(c => c.ppt === cardPpt && c.topic === t);
+  const mk = (val, label, on) => {
+    const b = document.createElement("button");
+    b.dataset.ctopic = val; b.textContent = label;
+    if (on) b.classList.add("on");
+    seg.appendChild(b);
+  };
+  mk("all", "Lahat", cardTopic === "all");
+  Object.entries(topics).forEach(([val, label]) => { if (inPpt(val)) mk(val, label, cardTopic === val); });
+}
+
+function buildDeck(reshuffle) {
+  const all = currentSubject.review || [];
+  const pool = all.filter(c =>
+    (cardPpt === "all" || c.ppt === cardPpt) &&
+    (cardTopic === "all" || c.topic === cardTopic)
+  );
+  cardDeck = reshuffle === false ? pool : shuffle(pool);
+  cardIdx = 0; cardFlipped = false;
+  renderCard();
+}
+
+function renderCard() {
+  const card = $("#flashCard");
+  card.classList.toggle("flipped", cardFlipped);
+  const c = cardDeck[cardIdx];
+  $("#flashTerm").textContent = c ? c.term : "Walang card sa filter na ito";
+  $("#flashDef").textContent = c ? c.def : "Baguhin ang PPT o paksa";
+  $("#cardNum").textContent = cardDeck.length ? `${cardIdx + 1}/${cardDeck.length}` : "0/0";
+  const total = (currentSubject.review || []).length;
+  $("#cardCount").textContent = `${cardDeck.length} cards (buo: ${total})`;
+}
+
+function setView(v) {
+  $$("#viewSeg button").forEach(x => x.classList.toggle("on", x.dataset.view === v));
+  const isCards = v === "cards";
+  $("#cardsView").classList.toggle("hidden", !isCards);
+  $("#quizView").classList.toggle("hidden", isCards);
+  if (!isCards) $("#resultView").classList.add("hidden");
+  if (isCards) { buildDeck(true); }
+}
+
+function setupCards() {
+  const has = currentSubject.review && currentSubject.review.length;
+  const btn = document.querySelector('#viewSeg button[data-view="cards"]');
+  btn.disabled = !has;
+  btn.textContent = has ? `Flashcards (${currentSubject.review.length})` : "Flashcards (wala pa)";
+  cardPpt = "all"; cardTopic = "all";
+  renderPptSeg(); renderCardTopicSeg();
+  setView("quiz");
 }
 
 function bindSeg(id, key, parse) {
@@ -295,6 +371,40 @@ document.addEventListener("DOMContentLoaded", () => {
     const b = e.target.closest("button"); if (b) renderReview(b.dataset.f);
   });
   $("#btnSubjects").addEventListener("click", showLanding);
+  $("#viewSeg").addEventListener("click", (e) => {
+    const b = e.target.closest("button");
+    if (!b || b.disabled) return;
+    setView(b.dataset.view);
+  });
+  $("#pptSeg").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b) return;
+    $$("#pptSeg button").forEach(x => x.classList.remove("on"));
+    b.classList.add("on");
+    cardPpt = b.dataset.ppt; cardTopic = "all";
+    renderCardTopicSeg(); buildDeck(true);
+  });
+  $("#cardTopicSeg").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b) return;
+    $$("#cardTopicSeg button").forEach(x => x.classList.remove("on"));
+    b.classList.add("on");
+    cardTopic = b.dataset.ctopic;
+    buildDeck(true);
+  });
+  $("#flashCard").addEventListener("click", () => {
+    if (!cardDeck.length) return;
+    cardFlipped = !cardFlipped; renderCard();
+  });
+  $("#btnCardPrev").addEventListener("click", () => {
+    if (!cardDeck.length) return;
+    cardIdx = (cardIdx - 1 + cardDeck.length) % cardDeck.length;
+    cardFlipped = false; renderCard();
+  });
+  $("#btnCardNext").addEventListener("click", () => {
+    if (!cardDeck.length) return;
+    cardIdx = (cardIdx + 1) % cardDeck.length;
+    cardFlipped = false; renderCard();
+  });
+  $("#btnCardShuffle").addEventListener("click", () => buildDeck(true));
 
   // landing muna: pili ng subject bago quiz
   renderSubjects();

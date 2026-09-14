@@ -75,8 +75,33 @@
     </section>
   </aside>
 
-  <!-- Kanan: quiz + resulta -->
+  <!-- Kanan: quiz + resulta + flashcards -->
   <section class="main">
+    <div class="seg" id="viewSeg" style="max-width:320px">
+      <button data-view="quiz" class="on">Quiz</button>
+      <button data-view="cards">Flashcards</button>
+    </div>
+    <div id="cardsView" class="panel hidden">
+      <div class="q-meta">
+        <span class="tag pink" id="cardCount">0 cards</span>
+        <span class="q-num" id="cardNum">0/0</span>
+      </div>
+      <label class="lbl">PPT na ire-review</label>
+      <div class="seg wrap" id="pptSeg"></div>
+      <label class="lbl">Paksa</label>
+      <div class="seg wrap" id="cardTopicSeg"></div>
+      <div class="flash-wrap" id="flashWrap">
+        <div class="flash-card" id="flashCard">
+          <div class="flash-front"><span id="flashTerm">—</span><em class="hint">Pindutin para bumaliktad</em></div>
+          <div class="flash-back"><span id="flashDef">—</span><em class="hint">Pindutin para bumalik</em></div>
+        </div>
+      </div>
+      <div class="q-nav">
+        <button id="btnCardPrev" class="btn ghost">← Nakaraan</button>
+        <button id="btnCardShuffle" class="btn ghost">Shuffle</button>
+        <button id="btnCardNext" class="btn ghost">Susunod →</button>
+      </div>
+    </div>
     <div id="quizView" class="panel quiz-panel">
       <div class="q-meta">
         <span class="tag" id="qTopic">Paksa</span>
@@ -121,6 +146,7 @@
 <script src="questions.js"></script>
 <script src="questions-pagsasalin.js"></script>
 <script src="questions-ebalwasyon.js"></script>
+<script src="reviewer-pagsasalin.js"></script>
 <script src="subjects.js"></script>
 <script src="app.js"></script>
 </body>

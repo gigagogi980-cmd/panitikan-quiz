@@ -12,7 +12,9 @@ const SUBJECTS = [
     title: "Introduksyon sa Pagsasalin",
     desc: "Kahulugan, iskolar, kasaysayan at kahalagahan ng pagsasalin",
     topics: PAGSASALIN_TOPICS,
-    bank: PAGSASALIN_BANK
+    bank: PAGSASALIN_BANK,
+    review: REVIEW_PAGSASALIN,
+    reviewTopics: REVIEW_PAGSASALIN_TOPICS
   },
   {
     id: "ebalwasyon",
