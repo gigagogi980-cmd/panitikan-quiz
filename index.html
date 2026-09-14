@@ -16,6 +16,7 @@
     <span class="pill">Enumerasyon: <b id="statEnum">0</b></span>
   </div>
   <div class="score-chip hidden" id="scoreChip">Iskor: <b id="scoreChipVal">0/0</b></div>
+  <button id="btnTheme" class="btn ghost" style="flex:0 0 auto;padding:5px 10px" title="Palitan ang tema">🌙</button>
 </header>
 
 <main class="landing" id="landingView">
@@ -100,6 +101,20 @@
         <button id="btnCardPrev" class="btn ghost">← Nakaraan</button>
         <button id="btnCardShuffle" class="btn ghost">Shuffle</button>
         <button id="btnCardNext" class="btn ghost">Susunod →</button>
+      </div>
+      <div class="seg sm" id="reviewModeSeg" style="margin-top:10px;max-width:280px">
+        <button data-rmode="cards" class="on">Flashcards</button>
+        <button data-rmode="list">Listahan</button>
+      </div>
+      <div id="listView" class="hidden">
+        <input id="listSearch" class="txtin" placeholder="Maghanap ng salita o kahulugan...">
+        <div class="table-wrap">
+          <table class="rev-table">
+            <thead><tr><th>Salita</th><th>Kahulugan</th><th>PPT</th></tr></thead>
+            <tbody id="listBody"></tbody>
+          </table>
+        </div>
+        <p class="hint" id="listCount">0 rows</p>
       </div>
     </div>
     <div id="quizView" class="panel quiz-panel">

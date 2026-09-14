@@ -5,6 +5,7 @@ const $$ = (s) => document.querySelectorAll(s);
 let settings = { mode: "mixed", topic: "all", count: 10 };
 let currentSubject = null;
 let cardPpt = "all", cardTopic = "all", cardDeck = [], cardIdx = 0, cardFlipped = false;
+let reviewMode = "cards", listQuery = "";
 let quiz = []; // shuffled questions for this session
 let answers = {}; // id -> string | string[]
 let current = 0;
@@ -129,7 +130,7 @@ function buildDeck(reshuffle) {
   );
   cardDeck = reshuffle === false ? pool : shuffle(pool);
   cardIdx = 0; cardFlipped = false;
-  renderCard();
+  renderCard(); renderList();
 }
 
 function renderCard() {
@@ -141,6 +142,35 @@ function renderCard() {
   $("#cardNum").textContent = cardDeck.length ? `${cardIdx + 1}/${cardDeck.length}` : "0/0";
   const total = (currentSubject.review || []).length;
   $("#cardCount").textContent = `${cardDeck.length} cards (buo: ${total})`;
+}
+
+function setReviewMode(m) {
+  reviewMode = m;
+  $$("#reviewModeSeg button").forEach(x => x.classList.toggle("on", x.dataset.rmode === m));
+  const isList = m === "list";
+  $("#listView").classList.toggle("hidden", !isList);
+  $("#flashWrap").classList.toggle("hidden", isList);
+  document.querySelector("#cardsView .q-nav").classList.toggle("hidden", isList);
+  if (isList) renderList();
+}
+
+function renderList() {
+  const body = $("#listBody");
+  if (!body) return;
+  body.innerHTML = "";
+  const q = norm(listQuery);
+  const rows = cardDeck
+    .filter(c => !q || norm(c.term).includes(q) || norm(c.def).includes(q))
+    .sort((a, b) => a.term.localeCompare(b.term, "tl"));
+  rows.forEach(c => {
+    const tr = document.createElement("tr");
+    const tdT = document.createElement("td"); tdT.textContent = c.term;
+    const tdD = document.createElement("td"); tdD.textContent = c.def;
+    const tdP = document.createElement("td"); tdP.textContent = c.ppt;
+    tr.append(tdT, tdD, tdP);
+    body.appendChild(tr);
+  });
+  $("#listCount").textContent = `${rows.length} rows (mula sa ${cardDeck.length} cards)`;
 }
 
 function setView(v) {
@@ -405,6 +435,22 @@ document.addEventListener("DOMContentLoaded", () => {
     cardFlipped = false; renderCard();
   });
   $("#btnCardShuffle").addEventListener("click", () => buildDeck(true));
+  $("#reviewModeSeg").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (b) setReviewMode(b.dataset.rmode);
+  });
+  $("#listSearch").addEventListener("input", (e) => { listQuery = e.target.value; renderList(); });
+  // theme: dark default, save sa localStorage
+  const applyTheme = (t) => {
+    document.documentElement.dataset.theme = t;
+    $("#btnTheme").textContent = t === "light" ? "☀️" : "🌙";
+    try { localStorage.setItem("pr-theme", t); } catch (e) {}
+  };
+  let savedTheme = "dark";
+  try { savedTheme = localStorage.getItem("pr-theme") || "dark"; } catch (e) {}
+  applyTheme(savedTheme);
+  $("#btnTheme").addEventListener("click", () => {
+    applyTheme(document.documentElement.dataset.theme === "light" ? "dark" : "light");
+  });
 
   // landing muna: pili ng subject bago quiz
   renderSubjects();
