@@ -3,6 +3,7 @@ const $ = (s) => document.querySelector(s);
 const $$ = (s) => document.querySelectorAll(s);
 
 let settings = { mode: "mixed", topic: "all", count: 10 };
+let currentSubject = null;
 let quiz = []; // shuffled questions for this session
 let answers = {}; // id -> string | string[]
 let current = 0;
@@ -25,10 +26,64 @@ function shuffle(arr) {
 }
 
 function initStats() {
-  $("#statTotal").textContent = QUESTION_BANK.length;
-  $("#statMC").textContent = QUESTION_BANK.filter(q => q.type === "mc").length;
-  $("#statID").textContent = QUESTION_BANK.filter(q => q.type === "id").length;
-  $("#statEnum").textContent = QUESTION_BANK.filter(q => q.type === "enum").length;
+  const bank = currentSubject ? currentSubject.bank : QUESTION_BANK;
+  $("#statTotal").textContent = bank.length;
+  $("#statMC").textContent = bank.filter(q => q.type === "mc").length;
+  $("#statID").textContent = bank.filter(q => q.type === "id").length;
+  $("#statEnum").textContent = bank.filter(q => q.type === "enum").length;
+}
+
+function renderSubjects() {
+  const g = $("#subjGrid"); g.innerHTML = "";
+  SUBJECTS.forEach(s => {
+    const mc = s.bank.filter(q => q.type === "mc").length;
+    const id = s.bank.filter(q => q.type === "id").length;
+    const en = s.bank.filter(q => q.type === "enum").length;
+    const card = document.createElement("button");
+    card.className = "subj-card";
+    card.innerHTML = `<b></b><span class="subj-desc"></span><span class="subj-meta"></span>`;
+    card.querySelector("b").textContent = s.title;
+    card.querySelector(".subj-desc").textContent = s.desc;
+    card.querySelector(".subj-meta").textContent = `${s.bank.length} tanong • MC ${mc} • ID ${id} • Enum ${en}`;
+    card.addEventListener("click", () => selectSubject(s.id));
+    g.appendChild(card);
+  });
+}
+
+function renderTopicSeg() {
+  const seg = $("#topicSeg"); seg.innerHTML = "";
+  const mk = (val, label, on) => {
+    const b = document.createElement("button");
+    b.dataset.topic = val; b.textContent = label;
+    if (on) b.classList.add("on");
+    seg.appendChild(b);
+  };
+  mk("all", "Lahat", true);
+  Object.entries(currentSubject.topics).forEach(([val, label]) => mk(val, label, false));
+}
+
+function selectSubject(id) {
+  currentSubject = SUBJECTS.find(s => s.id === id) || SUBJECTS[0];
+  settings = { mode: "mixed", topic: "all", count: 10 };
+  $$("#modeSeg button").forEach(x => x.classList.toggle("on", x.dataset.mode === "mixed"));
+  $$("#countSeg button").forEach(x => x.classList.toggle("on", x.dataset.count === "10"));
+  renderTopicSeg();
+  initStats();
+  $("#landingView").classList.add("hidden");
+  $("#quizLayout").classList.remove("hidden");
+  $("#resultView").classList.add("hidden");
+  $("#quizView").classList.remove("hidden");
+  $("#scoreChip").classList.add("hidden");
+  if (!buildQuiz()) return;
+  renderAll();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function showLanding() {
+  $("#quizLayout").classList.add("hidden");
+  $("#landingView").classList.remove("hidden");
+  renderSubjects();
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function bindSeg(id, key, parse) {
@@ -42,7 +97,8 @@ function bindSeg(id, key, parse) {
 }
 
 function buildQuiz() {
-  let pool = QUESTION_BANK.filter(q =>
+  if (!currentSubject) return false;
+  let pool = currentSubject.bank.filter(q =>
     (settings.mode === "mixed" || q.type === settings.mode) &&
     (settings.topic === "all" || q.topic === settings.topic)
   );
@@ -72,7 +128,7 @@ function renderAll() {
 
 function renderQuestion() {
   const q = quiz[current];
-  $("#qTopic").textContent = TOPICS[q.topic] || q.topic;
+  $("#qTopic").textContent = (currentSubject.topics[q.topic] || q.topic);
   $("#qType").textContent = TYPE_LABEL[q.type];
   $("#qNum").textContent = `Tanong ${current + 1}/${quiz.length}`;
   $("#qText").textContent = q.q;
@@ -194,7 +250,11 @@ function renderReview(f) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  initStats();
+  const allBank = SUBJECTS.reduce((a, s) => a.concat(s.bank), []);
+  $("#statTotal").textContent = allBank.length;
+  $("#statMC").textContent = allBank.filter(q => q.type === "mc").length;
+  $("#statID").textContent = allBank.filter(q => q.type === "id").length;
+  $("#statEnum").textContent = allBank.filter(q => q.type === "enum").length;
   bindSeg("modeSeg", "mode", b => b.dataset.mode);
   bindSeg("topicSeg", "topic", b => b.dataset.topic);
   bindSeg("countSeg", "count", b => b.dataset.count);
@@ -234,8 +294,9 @@ document.addEventListener("DOMContentLoaded", () => {
   $("#filterSeg").addEventListener("click", (e) => {
     const b = e.target.closest("button"); if (b) renderReview(b.dataset.f);
   });
+  $("#btnSubjects").addEventListener("click", showLanding);
 
-  // auto-start para agad masubukan
-  settings = { mode: "mixed", topic: "all", count: 10 };
-  buildQuiz(); renderAll();
+  // landing muna: pili ng subject bago quiz
+  renderSubjects();
+  showLanding();
 });

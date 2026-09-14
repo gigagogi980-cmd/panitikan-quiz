@@ -18,11 +18,22 @@
   <div class="score-chip hidden" id="scoreChip">Iskor: <b id="scoreChipVal">0/0</b></div>
 </header>
 
-<main class="layout">
+<main class="landing" id="landingView">
+  <div class="landing-head">
+    <h1>Piliin ang Subject</h1>
+    <p>Review quiz — Tagalog lahat, may Multiple Choice, Pagkakakilanlan at Enumerasyon.</p>
+  </div>
+  <div class="subj-grid" id="subjGrid"></div>
+</main>
+
+<main class="layout hidden" id="quizLayout">
   <!-- Kaliwa: setup + navigator -->
   <aside class="side">
     <section class="panel">
-      <h3>SETUP NG QUIZ</h3>
+      <div class="row2" style="margin-top:0">
+        <button id="btnSubjects" class="btn ghost">← Mga Subject</button>
+      </div>
+      <h3 style="margin-top:8px">SETUP NG QUIZ</h3>
       <label class="lbl">Uri ng quiz</label>
       <div class="seg" id="modeSeg">
         <button data-mode="mixed" class="on">Halo</button>
@@ -108,6 +119,8 @@
 </main>
 
 <script src="questions.js"></script>
+<script src="questions-pagsasalin.js"></script>
+<script src="subjects.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
