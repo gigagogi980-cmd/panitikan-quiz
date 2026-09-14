@@ -99,9 +99,9 @@ body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.45 "Segoe UI",Ar
 .subj-desc{font-size:12.5px;color:var(--mut)}
 .subj-meta{font-size:11.5px;color:var(--pink);background:var(--pink-bg);border:1px solid var(--pink-d);border-radius:7px;padding:4px 8px;width:fit-content}
 .flash-wrap{perspective:800px;margin:10px 0}
-.flash-card{position:relative;min-height:170px;cursor:pointer;transform-style:preserve-3d;transition:transform .35s}
+.flash-card{position:relative;display:grid;min-height:170px;cursor:pointer;transform-style:preserve-3d;transition:transform .35s;-webkit-tap-highlight-color:transparent;touch-action:pan-y}
 .flash-card.flipped{transform:rotateY(180deg)}
-.flash-front,.flash-back{position:absolute;inset:0;display:flex;flex-direction:column;gap:6px;align-items:center;justify-content:center;text-align:center;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:16px;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.flash-front,.flash-back{grid-area:1/1;display:flex;flex-direction:column;gap:6px;align-items:center;justify-content:center;text-align:center;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:16px;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow-wrap:anywhere}
 .flash-front span{font-size:19px;font-weight:700}
 .flash-back{transform:rotateY(180deg);border-color:var(--pink-d);background:#241220}
 .flash-back span{font-size:14.5px}
@@ -119,4 +119,25 @@ body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.45 "Segoe UI",Ar
   .layout{grid-template-columns:1fr}
   .res-grid{grid-template-columns:repeat(2,1fr)}
   .top-stats{display:none}
+}
+@media(max-width:600px){
+  body{overflow-x:clip}
+  .topbar{flex-wrap:wrap;gap:8px;padding:8px 10px}
+  .layout,.landing{padding:8px}
+  .landing-head h1{font-size:19px}
+  #qText{font-size:15.5px}
+  .q-nav{flex-wrap:wrap}
+  .q-nav .btn{flex:1 1 28%;padding:12px 6px;font-size:12px}
+  .seg button{min-height:42px}
+  .nav-grid button{height:36px}
+  .choice{padding:12px 10px;font-size:13px}
+  .flash-card{min-height:210px}
+  .flash-front span{font-size:17px}
+  .flash-back span{font-size:13.5px}
+  .rev-table{font-size:12px}
+  .rev-table th:nth-child(3),.rev-table td:nth-child(3){display:none}
+  .rev-table td:first-child{white-space:normal}
+  .table-wrap{max-height:60vh}
+  .res-grid{grid-template-columns:repeat(2,1fr);gap:8px}
+  .stat b{font-size:20px}
 }

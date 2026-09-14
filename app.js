@@ -424,6 +424,18 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!cardDeck.length) return;
     cardFlipped = !cardFlipped; renderCard();
   });
+  let touchX = null;
+  $("#flashCard").addEventListener("touchstart", (e) => {
+    touchX = e.changedTouches[0].clientX;
+  }, { passive: true });
+  $("#flashCard").addEventListener("touchend", (e) => {
+    if (touchX === null || !cardDeck.length) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    touchX = null;
+    if (Math.abs(dx) < 40) return;
+    cardIdx = (cardIdx + (dx < 0 ? 1 : -1) + cardDeck.length) % cardDeck.length;
+    cardFlipped = false; renderCard();
+  }, { passive: true });
   $("#btnCardPrev").addEventListener("click", () => {
     if (!cardDeck.length) return;
     cardIdx = (cardIdx - 1 + cardDeck.length) % cardDeck.length;
