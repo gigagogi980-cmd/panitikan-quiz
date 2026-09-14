@@ -23,6 +23,8 @@ const SUBJECTS = [
     title: "Ebalwasyon sa Pagtuturo",
     desc: "Epektibong guro, banghay-aralin at tagadisenyo ng pagkatuto",
     topics: EBALWASYON_TOPICS,
-    bank: EBALWASYON_BANK
+    bank: EBALWASYON_BANK,
+    review: REVIEW_EBALWASYON,
+    reviewTopics: REVIEW_EBALWASYON_TOPICS
   }
 ];
