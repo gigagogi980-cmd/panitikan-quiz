@@ -10,8 +10,15 @@ const SUBJECTS = [
   {
     id: "pagsasalin",
     title: "Introduksyon sa Pagsasalin",
-    desc: "Kahulugan, iskolar, kasaysayan, guro at banghay-aralin",
+    desc: "Kahulugan, iskolar, kasaysayan at kahalagahan ng pagsasalin",
     topics: PAGSASALIN_TOPICS,
     bank: PAGSASALIN_BANK
+  },
+  {
+    id: "ebalwasyon",
+    title: "Ebalwasyon sa Pagtuturo",
+    desc: "Epektibong guro, banghay-aralin at tagadisenyo ng pagkatuto",
+    topics: EBALWASYON_TOPICS,
+    bank: EBALWASYON_BANK
   }
 ];

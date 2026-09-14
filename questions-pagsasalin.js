@@ -3,10 +3,7 @@ const PAGSASALIN_TOPICS = {
   kahulugan: "Kahulugan ng Pagsasalin",
   iskolar: "Mga Iskolar",
   kahalagahan: "Sining, Agham at Kahalagahan",
-  kasaysayan: "Kasaysayan ng Pagsasalin",
-  guro: "Epektibong Guro",
-  banghay: "Banghay-Aralin",
-  disenyo: "Tagadisenyo ng Pagkatuto"
+  kasaysayan: "Kasaysayan ng Pagsasalin"
 };
 
 const PAGSASALIN_BANK = [
@@ -76,29 +73,5 @@ const PAGSASALIN_BANK = [
   { id: "p08", topic: "kasaysayan", type: "mc", q: "Alin ang HINDI kabilang sa 7 wikang binigyang-pansin ng LEDCO/SLATE?", choices: ["Tagalog", "Cebuano", "Ilocano", "Pangasinan"], answer: "Tagalog", explain: "Cebuano, Ilocano, Hiligaynon, Bicol, Samar-Leyte, Pampanggo, Pangasinan." },
   { id: "p09", topic: "kasaysayan", type: "mc", q: "Ano ang GUMIL at KURDITAN?", choices: ["Katipunan ng mga akdang isinalin sa Ilokano", "Proyekto ng NBS", "Bibliyang Aleman", "Akdang pambata"], answer: "Katipunan ng mga akdang isinalin sa Ilokano", explain: "Tulay ng panitikang rehiyonal at pambansa." },
 
-  // ============ GURO ============
-  { id: "g01", topic: "guro", type: "mc", q: "Ayon kay Richards (1992), ano ang mahalagang tanong bukod sa ano ang naituro?", choices: ["Ano ang naging epekto ng pagtuturo sa mag-aaral", "Ilan ang pumasa", "Gaano kahaba ang lesson plan", "Anong libro ang ginamit"], answer: "Ano ang naging epekto ng pagtuturo sa mag-aaral", explain: "Malikhaing pagtuturo: masigla, kawili-wili." },
-  { id: "g02", topic: "guro", type: "enum", q: "Ibigay ang 3 layunin ng pagtuturo ayon kay Hendricks.", answers: ["Mag-isip", "Matuto", "Gumawa"], explain: "Turuang mag-isip, matuto, gumawa." },
-  { id: "g03", topic: "guro", type: "mc", q: "Sino ang nagsabing pangalawang magulang ang guro?", choices: ["Popham (1980)", "Richards (1992)", "Gutierrez (2006)", "Hendricks (1998)"], answer: "Popham (1980)", explain: "Impluwensya lampas sa paaralan." },
-  { id: "g04", topic: "guro", type: "mc", q: "Ano ang dapat gawin sa maling sagot ng mag-aaral?", choices: ["Gawing pagkakataong linawin ang konsepto", "Ipahiya sa klase", "Pabayaan na lang", "Bawasan agad ang grado"], answer: "Gawing pagkakataong linawin ang konsepto", explain: "Positibong pag-uugali ng epektibong guro." },
-  { id: "g05", topic: "guro", type: "mc", q: "Alin ang nagpapakita ng pagiging inklusibo?", choices: ["Pagkilala sa Multiple Intelligences ng bawat mag-aaral", "Pagtatangi sa matatalino", "Iisang paraan sa lahat", "Pagbubukod sa mahihina"], answer: "Pagkilala sa Multiple Intelligences ng bawat mag-aaral", explain: "Lahat kasali sa pagkatuto." },
-  { id: "g06", topic: "guro", type: "mc", q: "Alin ang HINDI dapat taglayin ng guro?", choices: ["Prejudice o paunang paghusga sa mag-aaral", "Pagiging masayahin", "Pagiging mapagpatawad", "Pagiging handa"], answer: "Prejudice o paunang paghusga sa mag-aaral", explain: "Negatibong persepsyon + 4 pa: pang-aabuso, boring, mapang-abuso, takot." },
-  { id: "g07", topic: "guro", type: "mc", q: "Bakit hindi dapat magdulot ng takot ang guro?", choices: ["Ang takot ay pagsunod lang, hindi tunay na pagkatuto", "Dapat laging mahigpit", "Para pumasa lahat", "Para tahimik ang klase"], answer: "Ang takot ay pagsunod lang, hindi tunay na pagkatuto", explain: "Magtanong, sumubok, magkamali, matuto." },
-
-  // ============ BANGHAY ============
-  { id: "b01", topic: "banghay", type: "mc", q: "Ano ang banghay-aralin?", choices: ["Plano ng paksa at gawaing susundin ng guro", "Listahan ng grado", "Talaan ng lumiban", "Oras ng klase"], answer: "Plano ng paksa at gawaing susundin ng guro", explain: "Sangkap: layunin, paksa, kagamitan, pamamaraan, ebalwasyon." },
-  { id: "b02", topic: "banghay", type: "mc", q: "Paano dapat tingnan ang banghay-aralin?", choices: ["Gabay, hindi mahigpit na iskrip", "Babasahing salita-sa-salita", "Palamuti lamang", "Opsyonal na papel"], answer: "Gabay, hindi mahigpit na iskrip", explain: "Pwedeng iangkop sa klase." },
-  { id: "b03", topic: "banghay", type: "mc", q: "Aling uri ang detalyado pati tanong at inaasahang sagot?", choices: ["Masusing banghay-aralin", "Mala-masusi", "Maikli", "Hanggang layunin lang"], answer: "Masusing banghay-aralin", explain: "Para sa bagong guro, student teacher, demo." },
-  { id: "b04", topic: "banghay", type: "mc", q: "Ano ang modipikasyon sa kontekstuwalisasyon?", choices: ["Pagpapakinis o pagrerebisa ng gawain", "Pag-alis ng mahabang gawain", "Pagpapalit ng aklat", "Pag-iisa ng aralin"], answer: "Pagpapakinis o pagrerebisa ng gawain", explain: "Pagkaltas = alisin; pagpapalit = ibang aklat; kombinasyon = pag-iisa." },
-  { id: "b05", topic: "banghay", type: "mc", q: "Ano ang ibig sabihin ng M sa SMART?", choices: ["Measurable o nasusukat", "Maikli", "Mabilis", "Malinaw"], answer: "Measurable o nasusukat", explain: "S-tiyak, A-abutin, R-makatotohanan, T-takdang oras." },
-  { id: "b06", topic: "banghay", type: "mc", q: "Alin ang kabilang sa affective domain?", choices: ["Paglinang sa pagpapahalagang pangkatauhan", "Pagsulat ng iskrip", "Paggamit ng pangatnig", "Pag-uuri ng pahayag"], answer: "Paglinang sa pagpapahalagang pangkatauhan", explain: "Cognitive = kabatiran; psychomotor = paggawa." },
-  { id: "b07", topic: "banghay", type: "mc", q: "Alin ang unang hakbang sa pamamaraan?", choices: ["Panimulang gawain", "Pagtataya", "Paglalahat", "Paglalapat"], answer: "Panimulang gawain", explain: "Bati, panalangin, lumiban, balik-aral." },
-  { id: "b08", topic: "banghay", type: "mc", q: "Ano ang layunin ng kasunduan o takdang-aralin?", choices: ["Pagpapalalim o paghahanda sa susunod na aralin", "Pagtatala ng grado", "Pagdidisiplina", "Pagpapahinga"], answer: "Pagpapalalim o paghahanda sa susunod na aralin", explain: "Dalawang gamit nito." },
-
-  // ============ DISENYO ============
-  { id: "d01", topic: "disenyo", type: "mc", q: "Ano ang ibig sabihin ng guro bilang tagadisenyo?", choices: ["Nagpaplano at bumubuo ng karanasan at kagamitang pampagkatuto", "Tagapagbigay lamang ng impormasyon", "Tagabantay ng klase", "Tagagawa ng grado"], answer: "Nagpaplano at bumubuo ng karanasan at kagamitang pampagkatuto", explain: "Higit pa sa pagpapaliwanag sa harap ng klase." },
-  { id: "d02", topic: "disenyo", type: "mc", q: "Alin ang papel ng guro bilang assessor?", choices: ["Nangangalap ng ebidensiya ng pagkatuto", "Nagpapasya ng iskedyul", "Lumilikha ng kagamitan", "Sinusuri ang sariling pagtuturo"], answer: "Nangangalap ng ebidensiya ng pagkatuto", explain: "Reflective practitioner = nagsusuri ng sariling pagtuturo." },
-  { id: "d03", topic: "disenyo", type: "mc", q: "Alin ang UNANG tanong ng instructional designer?", choices: ["Ano ang kailangang matutuhan at anong karanasan ang makatutulong", "Anong PowerPoint ang gagawin", "Anong kulay ang slides", "Anong oras ang klase"], answer: "Ano ang kailangang matutuhan at anong karanasan ang makatutulong", explain: "Mag-aaral muna bago kagamitan." },
-  { id: "d04", topic: "disenyo", type: "mc", q: "Bakit kondisyon lang ang naididisenyo at hindi ang pagkatuto mismo?", choices: ["Ang mag-aaral pa rin ang aktuwal na natututo", "Tamang guro lang ang mahalaga", "Hindi kailangan ang gawain", "Sapat na ang libro"], answer: "Ang mag-aaral pa rin ang aktuwal na natututo", explain: "Kondisyon: nilalaman, gawain, estratehiya, tanong, interaksiyon, kagamitan, kapaligiran, pagtataya." },
-  { id: "d05", topic: "disenyo", type: "id", q: "Anong edukasyong nakasentro sa mag-aaral ang pumalit sa tradisyunal na guro-sentrado?", answers: ["learner-centered education", "learner centered"], explain: "Hindi lang ano ituturo kundi paano matutulungang matutuhan." }
+  // (mga tanong sa guro/banghay/disenyo: inilipat sa questions-ebalwasyon.js)
 ];
