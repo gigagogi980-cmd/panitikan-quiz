@@ -5,7 +5,9 @@ const SUBJECTS = [
     title: "Panitikang Rehiyon",
     desc: "Tula, manunulat, Cordillera at karunungang bayan",
     topics: TOPICS,
-    bank: QUESTION_BANK
+    bank: QUESTION_BANK,
+    review: REVIEW_PANITIKAN,
+    reviewTopics: REVIEW_PANITIKAN_TOPICS
   },
   {
     id: "pagsasalin",
