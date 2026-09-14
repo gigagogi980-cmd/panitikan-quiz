@@ -12,7 +12,7 @@ let lastResults = [];
 const TYPE_LABEL = { mc: "Multiple Choice", id: "Pagkakakilanlan", enum: "Enumerasyon" };
 
 function norm(s) {
-  return (s || "").toLowerCase().trim().replace(/\s+/g, " ").replace(/[.,!?;:()"'-]/g, "");
+  return (s || "").toLowerCase().trim().replace(/\s+/g, " ").replace(/[.,!?;:()"'\-–]/g, "");
 }
 
 function shuffle(arr) {
@@ -133,11 +133,13 @@ function renderProg() {
 function checkOne(q) {
   const a = answers[q.id];
   if (q.type === "mc") {
-    const ok = norm(a) === norm(q.answer);
+    const ua = norm(a);
+    const ok = ua !== "" && ua === norm(q.answer);
     return { ok, score: ok ? 1 : 0, max: 1, userText: a || "(walang sagot)", correctText: q.answer };
   }
   if (q.type === "id") {
-    const ok = q.answers.some(acc => norm(acc) === norm(a));
+    const ua = norm(a);
+    const ok = ua !== "" && q.answers.some(acc => norm(acc) === ua);
     return { ok, score: ok ? 1 : 0, max: 1, userText: a || "(walang sagot)", correctText: q.answers[0] };
   }
   // enum: order-independent, bawat item isang puntos, walang double-count
