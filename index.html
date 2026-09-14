@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Review Quiz — Panitikang Pilipino</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="dot"></span><strong>Panitikan</strong>Review</div>
+  <div class="top-stats" id="topStats">
+    <span class="pill">Tanong: <b id="statTotal">50</b></span>
+    <span class="pill">MC: <b id="statMC">0</b></span>
+    <span class="pill">Pagkakakilanlan: <b id="statID">0</b></span>
+    <span class="pill">Enumerasyon: <b id="statEnum">0</b></span>
+  </div>
+  <div class="score-chip hidden" id="scoreChip">Iskor: <b id="scoreChipVal">0/0</b></div>
+</header>
+
+<main class="layout">
+  <!-- Kaliwa: setup + navigator -->
+  <aside class="side">
+    <section class="panel">
+      <h3>SETUP NG QUIZ</h3>
+      <label class="lbl">Uri ng quiz</label>
+      <div class="seg" id="modeSeg">
+        <button data-mode="mixed" class="on">Halo</button>
+        <button data-mode="mc">Multiple Choice</button>
+        <button data-mode="id">Pagkakakilanlan</button>
+        <button data-mode="enum">Enumerasyon</button>
+      </div>
+      <label class="lbl">Paksa</label>
+      <div class="seg wrap" id="topicSeg">
+        <button data-topic="all" class="on">Lahat</button>
+        <button data-topic="tula">Tula</button>
+        <button data-topic="manunulat">Manunulat</button>
+        <button data-topic="cordillera">Cordillera</button>
+        <button data-topic="karunungan">Karunungan</button>
+      </div>
+      <label class="lbl">Bilang ng tanong</label>
+      <div class="seg" id="countSeg">
+        <button data-count="10" class="on">10</button>
+        <button data-count="15">15</button>
+        <button data-count="20">20</button>
+        <button data-count="all">Lahat</button>
+      </div>
+      <div class="row2">
+        <button id="btnStart" class="btn primary">Simulan ang Quiz</button>
+        <button id="btnReset" class="btn ghost">Ulitin</button>
+      </div>
+      <p class="hint">Na-shuffle ang tanong at pagpipilian para hindi paulit-ulit. Tagalog lahat.</p>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head"><h3>PROGRESO</h3><span id="progText">0/0</span></div>
+      <div class="bar"><div id="progBar"></div></div>
+      <div class="nav-grid" id="navGrid"></div>
+    </section>
+
+    <section class="panel mini">
+      <h3>LEHEND</h3>
+      <div class="legend"><span><i class="sq done"></i>Nasagutan</span><span><i class="sq cur"></i>Kasalukuyan</span><span><i class="sq todo"></i>Walang sagot</span></div>
+    </section>
+  </aside>
+
+  <!-- Kanan: quiz + resulta -->
+  <section class="main">
+    <div id="quizView" class="panel quiz-panel">
+      <div class="q-meta">
+        <span class="tag" id="qTopic">Paksa</span>
+        <span class="tag pink" id="qType">Uri</span>
+        <span class="q-num" id="qNum">Tanong 1/10</span>
+      </div>
+      <h2 id="qText">Pindutin ang “Simulan ang Quiz” para magsimula.</h2>
+      <div id="qBody" class="q-body"></div>
+      <div class="q-nav">
+        <button id="btnPrev" class="btn ghost">← Nakaraan</button>
+        <button id="btnNext" class="btn ghost">Susunod →</button>
+        <button id="btnSubmit" class="btn primary">Ipasa ang Sagot</button>
+      </div>
+    </div>
+
+    <div id="resultView" class="hidden">
+      <div class="res-grid">
+        <div class="panel stat"><span>Tamang sagot</span><b id="resCorrect" class="pink">0</b></div>
+        <div class="panel stat"><span>Kabuuang tanong</span><b id="resTotal">0</b></div>
+        <div class="panel stat"><span>Porsyento</span><b id="resPct">0%</b></div>
+        <div class="panel stat"><span>Marka</span><b id="resGrade">—</b></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">
+          <h3>SURI NG SAGOT</h3>
+          <div class="seg sm" id="filterSeg">
+            <button data-f="all" class="on">Lahat</button>
+            <button data-f="correct">Tama</button>
+            <button data-f="wrong">Mali</button>
+          </div>
+        </div>
+        <div id="reviewList" class="review"></div>
+        <div class="row2">
+          <button id="btnRetake" class="btn primary">Retake (bagong shuffle)</button>
+          <button id="btnBackSetup" class="btn ghost">Bumalik sa Setup</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="questions.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
